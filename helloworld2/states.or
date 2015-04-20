@@ -1,0 +1,38 @@
+
+# Atomix project, states.or, application state-machine
+# Copyright (c) 2015 Stanford University
+# Released under the Apache License v2.0. See the LICENSE file for details.
+# Author(s): Eyal Cidon
+#<command==action>:<axnName>:<atomseq>
+#<command==state>:<stateName>
+#<command==statep>:<stateName>:<coreNum>:<action|noaxn>:<atomseq>
+#<command=statei>:<initState>:<iterCount>
+
+#in this code we have 2 states, in the first state we produce the data and trasform it
+#in the second state we reverse the transformation and drain the data
+
+action: produce			: {
+					producer;
+					transformer;
+				}
+action: consume			: {
+					detransform;
+					consumer;
+				}
+
+state: init
+state: sProduce
+state: sConsume
+
+statep: init			: 0 : noaxn : {
+					jmpToProduce;
+					}
+statep: sProduce 		: 0 : produce : {
+					jmpToConsume;
+					}
+statep: sConsume 		: 0 : consume : {
+					jmpToProduce;
+					}
+
+statei: init	: 0
+

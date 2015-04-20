@@ -1,0 +1,30 @@
+
+# Atomix project, fifos.or, fifo declarations
+# Copyright (c) 2015 Stanford University
+# Released under the Apache License v2.0. See the LICENSE file for details.
+# Author(s): Eyal Cidon
+#<command==fifo>:<instancename>:<numbufs>:<src/dst/sin>:<coreid>
+#<command==typehint>:<fifoname>:<type>
+
+
+fifo: ff_kk0					: 2 	: sin	: 0
+fifo: ff_kk1					: 2 	: sin	: 1
+fifo: ff_kk2					: 2 	: sin	: 2
+fifo: ff_kk3					: 2 	: sin	: 3
+
+#fifos that are assigned to blocks located on multiple core need to be duplicated and synced with a TR block
+fifo: ff_processIn0				: 2	: sin	: 0
+fifo: ff_processIn1				: 2	: sin	: 1
+fifo: ff_comm1					: 2	: sin	: 1
+fifo: ff_comm2					: 2	: sin	: 2
+fifo: ff_processOut2				: 2	: sin	: 2
+fifo: ff_processOut3				: 2	: sin	: 3
+
+#typehint is for performance, it helps speedup the type identification of the fifo
+typehint: ff_processIn0			: EXILIB_tData_1
+typehint: ff_processIn1			: EXILIB_tData_1
+typehint: ff_comm1			: EXILIB_tData_1
+typehint: ff_comm2			: EXILIB_tData_1
+typehint: ff_processOut2		: EXILIB_tData_1
+typehint: ff_processOut3		: EXILIB_tData_1
+

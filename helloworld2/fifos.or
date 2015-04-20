@@ -1,0 +1,17 @@
+
+# Atomix project, fifos.or, fifo declarations
+# Copyright (c) 2015 Stanford University
+# Released under the Apache License v2.0. See the LICENSE file for details.
+# Author(s): Eyal Cidon
+#<command==fifo>:<instancename>:<numbufs>:<src/dst/sin>:<coreid>
+#<command==typehint>:<fifoname>:<type>
+
+fifo: ff_kk0					: 2 	: sin	: 0
+fifo: ff_kk1					: 2 	: sin	: 1
+fifo: ff_kk2					: 2 	: sin	: 2
+fifo: ff_kk3					: 2 	: sin	: 3
+
+fifo: ff_processIn				: 2	: sin	: 0
+fifo: ff_processOut				: 2	: sin	: 0
+fifo: ff_comm					: 2	: sin	: 0
+

@@ -1,0 +1,29 @@
+
+# Atomix project, states.or, application state-machine
+# Copyright (c) 2015 Stanford University
+# Released under the Apache License v2.0. See the LICENSE file for details.
+# Author(s): Eyal Cidon
+#<command==action>:<axnName>:<atomseq>
+#<command==state>:<stateName>
+#<command==statep>:<stateName>:<coreNum>:<action|noaxn>:<atomseq>
+#<command=statei>:<initState>:<iterCount>
+
+
+# action command declares an action and the series of blocks to run in the action
+action: helloWorld			: {
+								producer;
+								transformer;
+								consumer;
+					}
+
+# state command declares a state					
+state: testState
+
+# statep is the actual state declaration: it defines what action will run 
+#and what is the state logic after the action finishes
+statep: testState 	: 0 : helloWorld : {
+					jmp;
+					}
+# statei declares the initial state and state count
+statei: testState	: 0
+

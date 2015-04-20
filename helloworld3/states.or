@@ -1,0 +1,191 @@
+
+# Atomix project, states.or, application state-machine
+# Copyright (c) 2015 Stanford University
+# Released under the Apache License v2.0. See the LICENSE file for details.
+# Author(s): Eyal Cidon
+
+#<command==action>:<axnName>:<atomseq>
+#<command==state>:<stateName>
+#<command==statep>:<stateName>:<coreNum>:<action|noaxn>:<atomseq>
+#<command=statei>:<initState>:<iterCount>
+
+#each action is associated with a single state therefore if you perform the 
+#same action in multiple states it must be duplicated
+action: produce_1			: {
+producer;
+}
+
+action: produce_2			: {
+producer;
+}
+
+action: produce_3		: {
+producer;
+}
+
+action: produce_4			: {
+producer;
+}
+
+action: consume_4			: {
+consumer;
+}
+
+action: transform_2		: {
+transformer;
+}
+
+action: transform_3		: {
+transformer;
+}
+
+action: transform_4		: {
+transformer;
+}
+
+action: deTrans_3			: {
+detransform;
+}
+
+action: deTrans_4		: {
+detransform;
+}
+
+action: coreDatTrans1_1 : {
+transfer01;
+}
+
+action: coreDatTrans1_2 : {
+transfer01;
+}
+action: coreDatTrans2_2	: {
+transfer12;
+}
+
+action: coreDatTrans1_3 : {
+transfer01;
+}
+action: coreDatTrans2_3	: {
+transfer12;
+}
+action: coreDatTrans3_3	: {
+transfer23;
+}
+
+state: init
+state: initStage1
+state: datTransInit1
+state: initStage2
+state: datTransInit2
+state: initStage3
+state: datTransFull
+state: fullRun
+
+#to define a multicore state simply define its action and state rule for each core
+statep: init				: 0 : noaxn : {
+jmp0;
+}
+statep: init				: 1 : noaxn : {
+jmp1;
+}
+statep: init				: 2 : noaxn : {
+jmp2;
+}
+statep: init				: 3 : noaxn : {
+jmp3;
+}
+
+statep: datTransInit1	: 0 : noaxn : {
+jmpToInitS2_0;
+}
+statep: datTransInit1	: 1 : coreDatTrans1_1 : {
+jmpToInitS2_1;
+}
+statep: datTransInit1	: 2 : noaxn : {
+jmpToInitS2_2;
+}
+statep: datTransInit1	: 3 : noaxn : {
+jmpToInitS2_3;
+}
+
+statep: datTransInit2	: 0 : noaxn : {
+jmpToInitS3_0;
+}
+statep: datTransInit2	: 1 : coreDatTrans1_2 : {
+jmpToInitS3_1;
+}
+statep: datTransInit2	: 2 : coreDatTrans2_2 : {
+jmpToInitS3_2;
+}
+statep: datTransInit2	: 3 : noaxn : {
+jmpToInitS3_3;
+}
+
+statep: datTransFull	: 0 : noaxn : {
+jmpToFullRun_0;
+}
+statep: datTransFull	: 1 : coreDatTrans1_3 : {
+jmpToFullRun_1;
+}
+statep: datTransFull	: 2 : coreDatTrans2_3 : {
+jmpToFullRun_2;
+}
+statep: datTransFull	: 3 : coreDatTrans3_3 : {
+jmpToFullRun_3;
+}
+
+statep: initStage1	: 0 : produce_1 : {
+jmpDatTransInit1_0;
+}
+statep: initStage1	: 1 : noaxn : {
+jmpDatTransInit1_1;
+}
+statep: initStage1	: 2 : noaxn : {
+jmpDatTransInit1_2;
+}
+statep: initStage1	: 3 : noaxn : {
+jmpDatTransInit1_3;
+}
+
+statep: initStage2	: 0 : produce_2 : {
+jmpDatTransInit2_0;
+}
+statep: initStage2	: 1 : transform_2 : {
+jmpDatTransInit2_1;
+}
+statep: initStage2	: 2 : noaxn : {
+jmpDatTransInit2_2;
+}
+statep: initStage2	: 3 : noaxn : {
+jmpDatTransInit2_3;
+}
+
+statep: initStage3	: 0 : produce_3 : {
+jmpDatTransFull_0;
+}
+statep: initStage3	: 1 : transform_3 : {
+jmpDatTransFull_1;
+}
+statep: initStage3	: 2 : deTrans_3 : {
+jmpDatTransFull_2;
+}
+statep: initStage3	: 3 : noaxn : {
+jmpDatTransFull_3;
+}
+
+statep: fullRun	: 0 : produce_4 : {
+jmpDatTransFull_0;
+}
+statep: fullRun	: 1 : transform_4 : {
+jmpDatTransFull_1;
+}
+statep: fullRun	: 2 : deTrans_4 : {
+jmpDatTransFull_2;
+}
+statep: fullRun	: 3 : consume_4 : {
+jmpDatTransFull_3;
+}
+
+statei: init	: 1
+
+
