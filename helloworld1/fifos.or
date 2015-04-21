@@ -9,9 +9,9 @@
 #typehint is not required
 
 fifo: ff_kk0					: 2 	: sin	: 0
-fifo: ff_kk1					: 2 	: sin	: 2
-fifo: ff_kk3				: 2 	: sin	: 1
-fifo: ff_kk2						: 2 	: sin	: 3
+fifo: ff_kk1					: 2 	: sin	: 1
+fifo: ff_kk2				  : 2 	: sin	: 2
+fifo: ff_kk3					: 2 	: sin	: 3
 
 fifo: ff_processIn				: 2	: sin	: 0
 fifo: ff_processOut				: 2	: sin	: 0
